@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFC-CRM", "KFC-CRM\KFC-CRM.csproj", "{ACE85C92-31E8-4BE7-B94D-709339E3674B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACE85C92-31E8-4BE7-B94D-709339E3674B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACE85C92-31E8-4BE7-B94D-709339E3674B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACE85C92-31E8-4BE7-B94D-709339E3674B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACE85C92-31E8-4BE7-B94D-709339E3674B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8C001F6-FD52-402F-BE5A-17F64E4124FF}
+	EndGlobalSection
+EndGlobal
