@@ -1,8 +1,9 @@
-﻿namespace KFC.Entities;
+﻿using KFC_CRM.Entities.Commons;
 
-public class Meal
+namespace KFC_CRM.Entities.Meal;
+
+public class Meal : Auditable
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
