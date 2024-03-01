@@ -1,6 +1,8 @@
-﻿namespace KFC.Entities;
+﻿using KFC_CRM.Entities.Commons;
 
-public class Order
+namespace KFC_CRM.Entities.Order;
+
+public class Order : Auditable
 {
     public int Id { get; set; }
     public int CustomerId { get; set; }
