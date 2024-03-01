@@ -1,11 +1,17 @@
-﻿using KFC_CRM.Entities.Telegram.API;
+﻿using Newtonsoft.Json;
+
+namespace KFC_CRM.Entities.Telegram.API;
 
 public class Message
 {
-    public int Message_Id { get; set; }
+    [JsonProperty("message_id")]
+    public int MessageId { get; set; }
+    [JsonProperty("from")]
     public User From { get; set; }
+    [JsonProperty("chat")]
     public Chat Chat { get; set; }
+    [JsonProperty("date")]
     public int Date { get; set; }
+    [JsonProperty("text")]
     public string Text { get; set; }
-    public Audio Audio { get; set; }
 }
