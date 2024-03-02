@@ -1,5 +1,6 @@
 ﻿using KFC_CRM.Constants;
 using KFC_CRM.Entities.Customer;
+using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -23,6 +24,8 @@ public class TelegramService
     {
         var message = update.Message;
 
+        await Console.Out.WriteLineAsync($"{message.From?.FirstName}  |  {message.Text}");
+
         if (GetCustomersAsync().Any(c => c.Id == message.From.Id))
         {
             var users = GetCustomersAsync();
@@ -38,42 +41,21 @@ public class TelegramService
 
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
-                    text: "Now choose:",
+                    "Now choose:",
                     replyMarkup: replyKeyboardMarkup
                 );
-
-                // Create a new user object with the relevant information
-                var newUser = new Customer
-                {
-                    Id = message.From.Id,
-                    FirstName = message.From.FirstName,
-                    LastName = message.From.LastName,
-                    Phone = message.Contact?.PhoneNumber,
-                    TelegramId = message.Chat.Id
-                };
-                users = GetCustomersAsync();
-                if (!users.Any(u => u.Id == newUser.Id))
-                {
-                    users.Add(newUser);
-                }
-
-                // Serialize the user object to JSON
-                string userJsonn = JsonConvert.SerializeObject(users, Formatting.Indented);
-
-                // Write the user JSON to the users.json file
-                string filePathh = CONSTANTS.USERSPATH;
-                await System.IO.File.WriteAllTextAsync(filePathh, userJsonn);
             }
             else
             {
                 await botClient.SendTextMessageAsync(
-                chatId: message.Chat.Id,
-                text: "Share your contact",
-                replyMarkup: new ReplyKeyboardMarkup(new[]
-                {
-                    new[] { KeyboardButton.WithRequestContact("Share Contact") },
-                })
-            );
+                    chatId: message.Chat.Id,
+                    text: "Share your contact",
+                    replyMarkup: new ReplyKeyboardMarkup(new[]
+                        {
+                            new[] { KeyboardButton.WithRequestContact("Share Contact") },
+                        })
+                );
+                await Console.Out.WriteLineAsync($" /// {message.Contact?.PhoneNumber} ///");
 
                 var user = new Customer
                 {
@@ -83,20 +65,53 @@ public class TelegramService
                     Phone = message.Contact?.PhoneNumber,
                     TelegramId = message.Chat.Id
                 };
+
                 users = GetCustomersAsync();
-                if (!users.Any(u => u.Id == user.Id))
+                var existingUser = users.FirstOrDefault(u => u.Id == user.Id);
+
+                if (existingUser != null)
                 {
-                    users.Add(user);
+                    existingUser.Phone = user.Phone;
+
+                    // Serialize the user object to JSON
+                    string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+                    // Write the user JSON to the users.json file
+                    string filePath = CONSTANTS.USERSPATH;
+                    await System.IO.File.WriteAllTextAsync(filePath, userJson);
                 }
-
-                // Serialize the user object to JSON
-                string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
-
-                // Write the user JSON to the users.json file
-                string filePath = CONSTANTS.USERSPATH;
-                await System.IO.File.WriteAllTextAsync(filePath, userJson);
             }
         }
+        else
+        {
+            await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Share your contact",
+            replyMarkup: new ReplyKeyboardMarkup(new[]
+                {
+                    new[] { KeyboardButton.WithRequestContact("Share Contact") },
+                })
+            );
+
+            var user = new Customer
+            {
+                Id = message.From.Id,
+                FirstName = message.From.FirstName,
+                LastName = message.From.LastName,
+                Phone = message.Contact?.PhoneNumber,
+                TelegramId = message.Chat.Id
+            };
+            var users = GetCustomersAsync();
+            users.Add( user );
+
+            // Serialize the user object to JSON
+            string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+            // Write the user JSON to the users.json file
+            string filePath = CONSTANTS.USERSPATH;
+            await System.IO.File.WriteAllTextAsync(filePath, userJson);
+        }
+
         if (message != null)
         {
             if (message.Text == "Orders")
