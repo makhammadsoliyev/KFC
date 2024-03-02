@@ -1,22 +1,22 @@
 [
   {
-    "FirstName": "Asrorbek",
-    "LastName": "Abrorov",
-    "Phone": "998900511603",
-    "TelegramId": 1619704844,
-    "Id": 1619704844,
-    "CreatedAt": "2024-03-02T06:51:28.3207198Z",
-    "UpdatedAt": "0001-01-01T00:00:00",
-    "DeletedAt": "0001-01-01T00:00:00",
-    "IsDeleted": false
-  },
-  {
     "FirstName": "Asilbek",
     "LastName": "Abrorov",
     "Phone": "998900621310",
     "TelegramId": 6919797087,
     "Id": 6919797087,
     "CreatedAt": "2024-03-02T08:58:44.3792677Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "FirstName": "Asrorbek",
+    "LastName": "Abrorov",
+    "Phone": "998900511603",
+    "TelegramId": 1619704844,
+    "Id": 1619704844,
+    "CreatedAt": "2024-03-02T12:59:30.990614Z",
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
