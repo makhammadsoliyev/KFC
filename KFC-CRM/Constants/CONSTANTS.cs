@@ -9,4 +9,5 @@ namespace KFC_CRM.Constants;
 public class CONSTANTS
 {
     public const string BOTTOKEN = "6895850155:AAH_SKuiwX4ucXBgNaroE4Shdz7vjqDIGkI";
+    public const string USERSPATH = "../../../../KFC-CRM/Database/users.json";
 }
