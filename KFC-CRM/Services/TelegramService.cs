@@ -16,8 +16,6 @@ public class TelegramService
     }
     public async Task Run()
     {
-
-
         botClient.StartReceiving(Update, Error);
         Console.ReadLine();
     }
@@ -25,42 +23,50 @@ public class TelegramService
     {
         var message = update.Message;
 
-        if (message.Contact != null || message.Location != null)
+        if (GetCustomersAsync().Any(c => c.Id == message.From.Id))
         {
-            ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+            var users = GetCustomersAsync();
+            if (users.FirstOrDefault(c => c.Id == message.From.Id).Phone is not null)
             {
-                new KeyboardButton[] { "Orders", "Meals", "Categories" },
-            })
+                ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+                {
+                    new KeyboardButton[] { "Orders", "Meals", "Categories" },
+                })
+                {
+                    ResizeKeyboard = true
+                };
+
+                await botClient.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: "Now choose:",
+                    replyMarkup: replyKeyboardMarkup
+                );
+
+                // Create a new user object with the relevant information
+                var newUser = new Customer
+                {
+                    Id = message.From.Id,
+                    FirstName = message.From.FirstName,
+                    LastName = message.From.LastName,
+                    Phone = message.Contact?.PhoneNumber,
+                    TelegramId = message.Chat.Id
+                };
+                users = GetCustomersAsync();
+                if (!users.Any(u => u.Id == newUser.Id))
+                {
+                    users.Add(newUser);
+                }
+
+                // Serialize the user object to JSON
+                string userJsonn = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+                // Write the user JSON to the users.json file
+                string filePathh = CONSTANTS.USERSPATH;
+                await System.IO.File.WriteAllTextAsync(filePathh, userJsonn);
+            }
+            else
             {
-                ResizeKeyboard = true
-            };
-
-            await botClient.SendTextMessageAsync(
-                chatId: message.Chat.Id,
-                text: "Now choose:",
-                replyMarkup: replyKeyboardMarkup
-            );
-
-            // Create a new user object with the relevant information
-            var user = new Customer
-            {
-                Id = message.From.Id,
-                FirstName = message.From.FirstName,
-                LastName = message.From.LastName,
-                Phone = message.Contact?.PhoneNumber,
-                TelegramId = message.Chat.Id
-            };
-
-            // Serialize the user object to JSON
-            string userJson = JsonConvert.SerializeObject(user, Formatting.Indented);
-
-            // Write the user JSON to the users.json file
-            string filePath = CONSTANTS.USERSPATH;
-            await System.IO.File.AppendAllTextAsync(filePath, userJson + Environment.NewLine);
-        }
-        else
-        {
-            await botClient.SendTextMessageAsync(
+                await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
                 text: "Share your contact",
                 replyMarkup: new ReplyKeyboardMarkup(new[]
@@ -68,8 +74,29 @@ public class TelegramService
                     new[] { KeyboardButton.WithRequestContact("Share Contact") },
                 })
             );
-        }
 
+                var user = new Customer
+                {
+                    Id = message.From.Id,
+                    FirstName = message.From.FirstName,
+                    LastName = message.From.LastName,
+                    Phone = message.Contact?.PhoneNumber,
+                    TelegramId = message.Chat.Id
+                };
+                users = GetCustomersAsync();
+                if (!users.Any(u => u.Id == user.Id))
+                {
+                    users.Add(user);
+                }
+
+                // Serialize the user object to JSON
+                string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+                // Write the user JSON to the users.json file
+                string filePath = CONSTANTS.USERSPATH;
+                await System.IO.File.WriteAllTextAsync(filePath, userJson);
+            }
+        }
         if (message != null)
         {
             if (message.Text == "Orders")
