@@ -7,5 +7,5 @@ public class Customer : Auditable
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Phone { get; set; }
-    public int TelegramId { get; set; }
+    public long TelegramId { get; set; }
 }
