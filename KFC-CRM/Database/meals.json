@@ -3,70 +3,70 @@
     "Name": "Cheeseburger",
     "Description": "Delicious cheeseburger with beef patty, cheese, lettuce, and tomato",
     "Price": 9.99,
-    "PictureUrl": "https://example.com/images/cheeseburger.jpg",
+    "PictureUrl": "https://s7d1.scene7.com/is/image/mcdonalds/Header_Cheeseburger_832x472:1-3-product-tile-desktop?wid=763&hei=472&dpr=off",
     "CategoryId": 1
   },
   {
     "Name": "Margherita Pizza",
     "Description": "Classic pizza with tomato sauce, mozzarella cheese, and fresh basil",
     "Price": 12.99,
-    "PictureUrl": "https://example.com/images/margherita-pizza.jpg",
+    "PictureUrl": "https://www.hearthandfirepizza.com/cdn/shop/products/product-beauty-the-margherita_1500x.png?v=1656423819",
     "CategoryId": 2
   },
   {
     "Name": "Chicken Caesar Salad",
     "Description": "Fresh salad with grilled chicken, romaine lettuce, croutons, and Caesar dressing",
     "Price": 8.99,
-    "PictureUrl": "https://example.com/images/chicken-caesar-salad.jpg",
+    "PictureUrl": "https://s23209.pcdn.co/wp-content/uploads/2023/01/220905_DD_Chx-Caesar-Salad_051.jpg",
     "CategoryId": 3
   },
   {
     "Name": "Spaghetti Bolognese",
     "Description": "Classic Italian pasta dish with meat sauce",
     "Price": 10.99,
-    "PictureUrl": "https://example.com/images/spaghetti-bolognese.jpg",
+    "PictureUrl": "https://www.kitchensanctuary.com/wp-content/uploads/2019/09/Spaghetti-Bolognese-square-FS-0204-500x500.jpg",
     "CategoryId": 4
   },
   {
     "Name": "Sushi Roll",
     "Description": "Assorted sushi rolls with fresh fish and vegetables",
     "Price": 14.99,
-    "PictureUrl": "https://example.com/images/sushi-roll.jpg",
+    "PictureUrl": "https://www.justonecookbook.com/wp-content/uploads/2020/01/Sushi-Rolls-Maki-Sushi-%E2%80%93-Hosomaki-1106-II.jpg",
     "CategoryId": 5
   },
   {
     "Name": "BBQ Ribs",
     "Description": "Tender and juicy BBQ ribs with a tangy sauce",
     "Price": 16.99,
-    "PictureUrl": "https://example.com/images/bbq-ribs.jpg",
+    "PictureUrl": "https://cafedelites.com/wp-content/uploads/2018/06/Oven-Pork-Ribs-IMAGE-5.jpg",
     "CategoryId": 6
   },
   {
     "Name": "Caesar Wrap",
     "Description": "Grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing wrapped in a tortilla",
     "Price": 7.99,
-    "PictureUrl": "https://example.com/images/caesar-wrap.jpg",
+    "PictureUrl": "https://www.twopeasandtheirpod.com/wp-content/uploads/2023/08/Chicken-Caesar-Wraps-14.jpg",
     "CategoryId": 3
   },
   {
     "Name": "Mushroom Risotto",
     "Description": "Creamy risotto with mushrooms and Parmesan cheese",
     "Price": 11.99,
-    "PictureUrl": "https://example.com/images/mushroom-risotto.jpg",
+    "PictureUrl": "https://www.allrecipes.com/thmb/Pow6PE9UyushNDB4wutXNnmriX8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/85389-gourmet-mushroom-risotto-86-7a2d218f53e94ccfaecc69b6fd93cab8.jpg",
     "CategoryId": 4
   },
   {
     "Name": "Fish and Chips",
     "Description": "Crispy battered fish served with fries",
     "Price": 9.99,
-    "PictureUrl": "https://example.com/images/fish-and-chips.jpg",
+    "PictureUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Fish_and_chips_blackpool.jpg/800px-Fish_and_chips_blackpool.jpg",
     "CategoryId": 7
   },
   {
     "Name": "Chocolate Brownie",
     "Description": "Rich and fudgy chocolate brownie topped with vanilla ice cream",
     "Price": 5.99,
-    "PictureUrl": "https://example.com/images/chocolate-brownie.jpg",
+    "PictureUrl": "https://cakesbymk.com/wp-content/uploads/2023/01/Template-Size-for-Blog-Photos-15.jpg",
     "CategoryId": 8
   }
 ]

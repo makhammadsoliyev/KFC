@@ -2,6 +2,8 @@
 using KFC_CRM.Entities.Customer;
 using KFC_CRM.Entities.Meal;
 using Newtonsoft.Json;
+using System;
+using System.Net;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.InlineQueryResults;
@@ -149,7 +151,24 @@ public class TelegramService
             {
                 var meals = GetMeals();
                 var meal = meals.FirstOrDefault(m => m.Name == message.Text);
-                await botClient.SendTextMessageAsync(message.Chat.Id, $"Meal : {meal.Name}\nPrice : {meal.Price}");
+
+                if (meal != null)
+                {
+                    using (var webClient = new WebClient())
+                    {
+                        byte[] photoBytes = webClient.DownloadData(meal.PictureUrl);
+                        using (var memoryStream = new MemoryStream(photoBytes))
+                        {
+                            var photo = new InputFileStream(memoryStream, "photo.jpg");
+                            await botClient.SendPhotoAsync(
+                                chatId: message.Chat.Id,
+                                photo: photo,
+                                caption: message.Text
+                            );
+                        }
+                    }
+                }
+                await botClient.SendTextMessageAsync(message.Chat.Id, $"Meal : {meal.Name}\nDescription : {meal.Description}\nPrice : {meal.Price}");
             }
         }
     }
