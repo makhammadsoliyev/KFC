@@ -16,7 +16,18 @@
     "Phone": "998900511603",
     "TelegramId": 1619704844,
     "Id": 1619704844,
-    "CreatedAt": "2024-03-02T12:59:30.990614Z",
+    "CreatedAt": "2024-03-02T18:31:04.741171Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "FirstName": "Abrorov",
+    "LastName": "Javohir",
+    "Phone": "998900620910",
+    "TelegramId": 1721247146,
+    "Id": 1721247146,
+    "CreatedAt": "2024-03-02T18:34:28.0641269Z",
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
