@@ -31,5 +31,16 @@
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
+  },
+  {
+    "FirstName": "J",
+    "LastName": "O",
+    "Phone": "998909090511",
+    "TelegramId": 483326414,
+    "Id": 483326414,
+    "CreatedAt": "2024-03-03T15:24:21.0849624Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
   }
 ]
