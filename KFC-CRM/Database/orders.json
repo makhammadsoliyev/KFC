@@ -1,3 +1,79 @@
-{
-  
-}
+[
+  {
+    "CustomerId": 1619704844,
+    "Number": 8278,
+    "TotalAmount": 12.99,
+    "Date": "2024-03-03T16:16:34.1214713Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:16:34.1214718Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 5940,
+    "TotalAmount": 22.98,
+    "Date": "2024-03-03T16:17:53.1316176Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:17:53.1316177Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 4474,
+    "TotalAmount": 14.99,
+    "Date": "2024-03-03T16:19:40.1075304Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:19:40.1075307Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 483326414,
+    "Number": 9518,
+    "TotalAmount": 97.93,
+    "Date": "2024-03-03T16:28:55.7074843Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:28:55.7074846Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 6919797087,
+    "Number": 8709,
+    "TotalAmount": 17.98,
+    "Date": "2024-03-03T16:30:51.9990346Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:30:51.9990347Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 6919797087,
+    "Number": 8689,
+    "TotalAmount": 24.98,
+    "Date": "2024-03-03T16:31:27.0763734Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:31:27.0763734Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 2668,
+    "TotalAmount": 19.98,
+    "Date": "2024-03-03T16:31:47.145356Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:31:47.145356Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  }
+]

@@ -2,6 +2,7 @@
 using KFC_CRM.Entities.Box;
 using KFC_CRM.Entities.Customer;
 using KFC_CRM.Entities.Meal;
+using KFC_CRM.Entities.Order;
 using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
 using System;
@@ -36,7 +37,44 @@ public class TelegramService
         {
             var boxes = GetBoxes() ?? new List<Box>();
 
-            if (update.CallbackQuery.Data.Contains("__delete"))
+            if (update.CallbackQuery.Data == "Order")
+            {
+                decimal totalPrice = 0;
+                
+                var meal = GetMeal(update.CallbackQuery.Data);
+                
+                var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
+
+                var distinctMeals = box.Meals.DistinctBy(m => m.Name);
+
+                foreach (var meall in distinctMeals)
+                {
+                    var quantity = box.Meals.Count(m => m.Name == meall.Name);
+                    var price = meall.Price * quantity;
+                    totalPrice += price;
+                }
+                var order = new Order
+                {
+                    CustomerId = update.CallbackQuery.From.Id,
+                    TotalAmount = totalPrice
+                };
+
+                // Generate a unique order number
+                var orderNumber = GenerateOrderNumber();
+                order.Number = orderNumber;
+
+                // Save the order to the orders.json file
+                var orders = LoadOrders();
+                orders.Add(order);
+                SaveOrders(orders);
+
+                await botClient.SendTextMessageAsync(update.CallbackQuery.From.Id, "Your order has been placed successfully!");
+
+                // Reset the box for the customer
+                box.Meals.Clear();
+                await SaveBoxesAsync(boxes);
+            }
+            else if (update.CallbackQuery.Data.Contains("__delete"))
             {
                 var mealName = update.CallbackQuery.Data.Replace("__delete", "").Trim();
                 var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
@@ -155,6 +193,10 @@ public class TelegramService
                 }
             }
         }
+        else if (update.MyChatMember is not null)
+        {
+            Console.WriteLine("Something went wrong!");
+        }
         else
         {
             await botClient.SendTextMessageAsync(
@@ -189,7 +231,19 @@ public class TelegramService
         {
             if (message.Text == "Orders")
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Entered Orders");
+                // Load the orders for the customer
+                var orders = LoadOrdersForCustomer(message.Chat.Id);
+
+                if (orders.Count > 0)
+                {
+                    // Format and send the orders to the customer
+                    var ordersText = FormatOrdersText(orders);
+                    await botClient.SendTextMessageAsync(message.Chat.Id, ordersText);
+                }
+                else
+                {
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "You have no orders yet.");
+                }
             }
             else if (message.Text == "Meals")
             {
@@ -230,24 +284,42 @@ public class TelegramService
                     else if (box.Meals.Count() != 0)
                     {
                         var inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
+                        decimal totalPrice = 0;
 
-                        foreach (var meal in box.Meals.DistinctBy(m => m.Name))
+                        await botClient.SendTextMessageAsync(message.Chat.Id, "📥 Корзина:");
+
+                        var distinctMeals = box.Meals.DistinctBy(m => m.Name);
+
+                        foreach (var meal in distinctMeals)
                         {
+                            var quantity = box.Meals.Count(m => m.Name == meal.Name);
+                            var price = meal.Price * quantity;
+                            totalPrice += price;
+
+                            var mealText = $"{quantity}. {meal.Name}\n{quantity} x {meal.Price} = {price} $";
+
+                            await botClient.SendTextMessageAsync(message.Chat.Id, mealText);
+                            var orderButton = InlineKeyboardButton.WithCallbackData("Order");
                             var plusButton = InlineKeyboardButton.WithCallbackData($"+", $"{meal.Name}");
                             var minusButton = InlineKeyboardButton.WithCallbackData($"-", $"{meal.Name}__minus");
                             var removeProductButton = InlineKeyboardButton.WithCallbackData($" X {meal.Name} X ", $"{meal.Name}__delete");
-                            var quantityButton = InlineKeyboardButton.WithCallbackData($"{box.Meals.Count(m => m.Name == meal.Name)}");
+                            var quantityButton = InlineKeyboardButton.WithCallbackData($"{quantity}");
                             inlineKeyboardButtons.Add(new[] { removeProductButton });
                             inlineKeyboardButtons.Add(new[] { minusButton, quantityButton, plusButton });
+                            inlineKeyboardButtons.Add(new[] { orderButton });
                         }
+
+                        var totalPriceText = $"\n\nOverall: {totalPrice} $";
+                        await botClient.SendTextMessageAsync(message.Chat.Id, totalPriceText);
 
                         var inlineKeyboardMarkup = new InlineKeyboardMarkup(inlineKeyboardButtons);
 
                         await botClient.SendTextMessageAsync(
                             chatId: message.Chat.Id,
-                            text: "Here are the meals in your box:",
+                            text: "To place your order, click the button below:",
                             replyMarkup: inlineKeyboardMarkup
                         );
+
                     }
                     else
                     {
@@ -298,6 +370,62 @@ public class TelegramService
                 }
             }
         }
+    }
+    // Format the orders into a readable text format
+    private string FormatOrdersText(List<Order> orders)
+    {
+        var ordersText = "Your orders:\n\n";
+
+        foreach (var order in orders)
+        {
+            ordersText += $"Order Number: {order.Number}\n";
+            ordersText += $"Total Amount: {order.TotalAmount} $\n";
+            ordersText += $"Date: {order.Date.ToString("yyyy-MM-dd HH:mm:ss")}\n\n";
+        }
+
+        return ordersText;
+    }
+    // Generate a unique order number
+    private int GenerateOrderNumber()
+    {
+        // You can implement your own logic to generate a unique order number
+        // For simplicity, let's generate a random number between 1000 and 9999
+        Random random = new Random();
+        return random.Next(1000, 10000);
+    }
+
+    // Load existing orders from the orders.json file
+    private List<Order> LoadOrders()
+    {
+        // Read the contents of the orders.json file
+        string ordersJson = System.IO.File.ReadAllText(CONSTANTS.ORDERPATH);
+
+        // Deserialize the JSON string to a list of Order objects
+        List<Order> orders = JsonConvert.DeserializeObject<List<Order>>(ordersJson);
+
+        // If the orders.json file doesn't exist or is empty, return an empty list
+        if (orders == null)
+        {
+            orders = new List<Order>();
+        }
+
+        return orders;
+    }
+    // Load orders specifically for the customer
+    private List<Order> LoadOrdersForCustomer(long customerId)
+    {
+        var orders = LoadOrders();
+        return orders.Where(o => o.CustomerId == customerId).ToList();
+    }
+
+    // Save the orders to the orders.json file
+    private void SaveOrders(List<Order> orders)
+    {
+        // Serialize the list of Order objects to a JSON string
+        string ordersJson = JsonConvert.SerializeObject(orders, Formatting.Indented);
+
+        // Write the JSON string to the orders.json file
+        System.IO.File.WriteAllText(CONSTANTS.ORDERPATH, ordersJson);
     }
 
     private async Task SaveBoxesAsync(List<Box> boxes)
