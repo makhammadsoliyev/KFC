@@ -117,7 +117,7 @@ public class TelegramService
 
                 box.Meals.Add(meal);
                 await SaveBoxesAsync(boxes);
-                await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Korzinka qo'shildi");
+                await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Added to the box");
             }
             else
             {
@@ -286,7 +286,7 @@ public class TelegramService
                         var inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
                         decimal totalPrice = 0;
 
-                        await botClient.SendTextMessageAsync(message.Chat.Id, "📥 Корзина:");
+                        await botClient.SendTextMessageAsync(message.Chat.Id, "📥 Box:");
 
                         var distinctMeals = box.Meals.DistinctBy(m => m.Name);
 
