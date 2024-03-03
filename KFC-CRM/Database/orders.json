@@ -75,5 +75,38 @@
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
+  },
+  {
+    "CustomerId": 1634251726,
+    "Number": 5183,
+    "TotalAmount": 9.99,
+    "Date": "2024-03-03T16:50:05.5207226Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:50:05.5207227Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 1947,
+    "TotalAmount": 0.0,
+    "Date": "2024-03-03T16:52:02.2528274Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:52:02.2528274Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 8656,
+    "TotalAmount": 0.0,
+    "Date": "2024-03-03T16:52:11.99751Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-03T16:52:11.9975101Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
   }
 ]
