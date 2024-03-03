@@ -30,25 +30,76 @@ public class TelegramService
     {
         var message = update.Message;
 
-        if (update.CallbackQuery != null)
-        {
-            await client.AnswerCallbackQueryAsync(update?.CallbackQuery?.Id, "Korzinkaga qushilmoqda");
-            var boxes = GetBoxes() ?? new List<Box>();
-            var meal = GetMeal(update.CallbackQuery.Data);
-            var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id) ?? new Box() 
-            {
-                TelegramId = update.CallbackQuery.From.Id,
-                Meals = new List<Meal>()
-            };
-            box.Meals.Add(meal);
-            boxes.Add(box);
-            await SaveBoxesAsync(boxes);
-            await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Korzinka qo'shildi");
-        }
-
         await Console.Out.WriteLineAsync($"{message?.From?.FirstName}  |  {message?.Text}");
 
-        if (GetCustomers().Any(c => c.Id == message?.From?.Id))
+        if (update.CallbackQuery != null)
+        {
+            var boxes = GetBoxes() ?? new List<Box>();
+
+            if (update.CallbackQuery.Data.Contains("__delete"))
+            {
+                var mealName = update.CallbackQuery.Data.Replace("__delete", "").Trim();
+                var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
+
+                if (box != null)
+                {
+                    var mealsToRemove = box.Meals.Where(m => m.Name == mealName).ToList();
+
+                    if (mealsToRemove.Count > 0)
+                    {
+                        foreach (var mealToRemove in mealsToRemove)
+                        {
+                            box.Meals.Remove(mealToRemove);
+                        }
+
+                        await SaveBoxesAsync(boxes);
+                        await client.SendTextMessageAsync(update.CallbackQuery.From.Id, $"All meals with the name '{mealName}' have been removed from the box.");
+                    }
+                    else
+                    {
+                        await client.SendTextMessageAsync(update.CallbackQuery.From.Id, $"No meals found with the name '{mealName}' in the box.");
+                    }
+                }
+            }
+            else if (!update.CallbackQuery.Data.Contains("__minus"))
+            {
+                var meal = GetMeal(update.CallbackQuery.Data);
+                var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
+
+                if (box is null)
+                {
+                    box = new Box()
+                    {
+                        TelegramId = update.CallbackQuery.From.Id,
+                        Meals = new List<Meal>()
+                    };
+                    box.Meals.Add(meal);
+                    boxes.Add(box);
+                }
+
+                box.Meals.Add(meal);
+                await SaveBoxesAsync(boxes);
+                await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Korzinka qo'shildi");
+            }
+            else
+            {
+                var mealName = update.CallbackQuery.Data.Replace("__minus", "").Trim();
+                var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
+
+                if (box != null)
+                {
+                    var mealToRemove = box.Meals.FirstOrDefault(m => m.Name == mealName);
+
+                    if (mealToRemove != null)
+                    {
+                        box.Meals.Remove(mealToRemove);
+                        await SaveBoxesAsync(boxes);
+                        await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Meal removed from the box.");
+                    }
+                }
+            }
+        }
+        else if (GetCustomers().Any(c => c.Id == message?.From?.Id))
         {
             var users = GetCustomers();
             if (users.FirstOrDefault(c => c.Id == message?.From?.Id).Phone is not null)
@@ -160,12 +211,55 @@ public class TelegramService
                     replyMarkup: replyKeyboardMarkup
                 );
             }
+
             else if (message.Text == "My Box")
             {
                 await botClient.SendTextMessageAsync(message.Chat.Id, "Entered My Box");
-                var boxes = GetBoxes();
 
+                var boxes = GetBoxes();
+                if (boxes.DefaultIfEmpty() != null)
+                {
+                    var box = boxes.FirstOrDefault(b => b.TelegramId == message.From.Id);
+                    if (box is null)
+                    {
+                        await botClient.SendTextMessageAsync(
+                                chatId: message.Chat.Id,
+                                text: "No meals found! You should "
+                            );
+                    }
+                    else if (box.Meals.Count() != 0)
+                    {
+                        var inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
+
+                        foreach (var meal in box.Meals.DistinctBy(m => m.Name))
+                        {
+                            var plusButton = InlineKeyboardButton.WithCallbackData($"+", $"{meal.Name}");
+                            var minusButton = InlineKeyboardButton.WithCallbackData($"-", $"{meal.Name}__minus");
+                            var removeProductButton = InlineKeyboardButton.WithCallbackData($" X {meal.Name} X ", $"{meal.Name}__delete");
+                            var quantityButton = InlineKeyboardButton.WithCallbackData($"{box.Meals.Count(m => m.Name == meal.Name)}");
+                            inlineKeyboardButtons.Add(new[] { removeProductButton });
+                            inlineKeyboardButtons.Add(new[] { minusButton, quantityButton, plusButton });
+                        }
+
+                        var inlineKeyboardMarkup = new InlineKeyboardMarkup(inlineKeyboardButtons);
+
+                        await botClient.SendTextMessageAsync(
+                            chatId: message.Chat.Id,
+                            text: "Here are the meals in your box:",
+                            replyMarkup: inlineKeyboardMarkup
+                        );
+                    }
+                    else
+                    {
+                        await botClient.SendTextMessageAsync(
+                                chatId: message.Chat.Id,
+                                text: "No meals found!"
+                            );
+                    }
+                }
+                
             }
+
             if (GetMeals().Any(m => m.Name == message.Text))
             {
                 var meals = GetMeals();
@@ -191,7 +285,7 @@ public class TelegramService
                     {
                         new []
                         {
-                            InlineKeyboardButton.WithCallbackData($"{meal.Name}")
+                            InlineKeyboardButton.WithCallbackData("Add to box", $"{meal.Name}")
                         }
                     });
 
