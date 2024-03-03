@@ -7,5 +7,5 @@ public class Order : Auditable
     public int CustomerId { get; set; }
     public int Number { get; set; }
     public decimal TotalAmount { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
 }

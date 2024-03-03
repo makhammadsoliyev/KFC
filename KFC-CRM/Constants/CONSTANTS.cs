@@ -11,4 +11,6 @@ public class CONSTANTS
     public const string BOTTOKEN = "6791825057:AAH35YAVLkMH6PgFsoD4lQ89xlS0oHjganQ";
     public const string USERSPATH = "../../../../KFC-CRM/Database/users.json";
     public const string MEALSPATH = "../../../../KFC-CRM/Database/meals.json";
+    public const string ORDERPATH = "../../../../KFC-CRM/Database/orders.json";
+    public const string BOXPATH = "../../../../KFC-CRM/Database/boxes.json";
 }
