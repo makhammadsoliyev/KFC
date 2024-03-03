@@ -42,5 +42,16 @@
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
+  },
+  {
+    "FirstName": "Umidjon",
+    "LastName": null,
+    "Phone": "998900223538",
+    "TelegramId": 1634251726,
+    "Id": 1634251726,
+    "CreatedAt": "2024-03-03T15:59:54.8709181Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
   }
 ]

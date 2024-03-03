@@ -5,56 +5,7 @@
   },
   {
     "TelegramId": 483326414,
-    "Meals": [
-      {
-        "Name": "BBQ Ribs",
-        "Description": "Tender and juicy BBQ ribs with a tangy sauce",
-        "Price": 16.99,
-        "PictureUrl": "https://cafedelites.com/wp-content/uploads/2018/06/Oven-Pork-Ribs-IMAGE-5.jpg",
-        "CategoryId": 6,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:25:18.1265966Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "BBQ Ribs",
-        "Description": "Tender and juicy BBQ ribs with a tangy sauce",
-        "Price": 16.99,
-        "PictureUrl": "https://cafedelites.com/wp-content/uploads/2018/06/Oven-Pork-Ribs-IMAGE-5.jpg",
-        "CategoryId": 6,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:25:18.1265966Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "BBQ Ribs",
-        "Description": "Tender and juicy BBQ ribs with a tangy sauce",
-        "Price": 16.99,
-        "PictureUrl": "https://cafedelites.com/wp-content/uploads/2018/06/Oven-Pork-Ribs-IMAGE-5.jpg",
-        "CategoryId": 6,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:25:39.3583316Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "BBQ Ribs",
-        "Description": "Tender and juicy BBQ ribs with a tangy sauce",
-        "Price": 16.99,
-        "PictureUrl": "https://cafedelites.com/wp-content/uploads/2018/06/Oven-Pork-Ribs-IMAGE-5.jpg",
-        "CategoryId": 6,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:25:39.572206Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      }
-    ]
+    "Meals": []
   },
   {
     "TelegramId": 1721247146,
@@ -87,79 +38,10 @@
   },
   {
     "TelegramId": 6919797087,
-    "Meals": [
-      {
-        "Name": "Fish and Chips",
-        "Description": "Crispy battered fish served with fries",
-        "Price": 9.99,
-        "PictureUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Fish_and_chips_blackpool.jpg/800px-Fish_and_chips_blackpool.jpg",
-        "CategoryId": 7,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:36:33.8735597Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Fish and Chips",
-        "Description": "Crispy battered fish served with fries",
-        "Price": 9.99,
-        "PictureUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Fish_and_chips_blackpool.jpg/800px-Fish_and_chips_blackpool.jpg",
-        "CategoryId": 7,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:36:33.8735597Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Cheeseburger",
-        "Description": "Delicious cheeseburger with beef patty, cheese, lettuce, and tomato",
-        "Price": 9.99,
-        "PictureUrl": "https://s7d1.scene7.com/is/image/mcdonalds/Header_Cheeseburger_832x472:1-3-product-tile-desktop?wid=763&hei=472&dpr=off",
-        "CategoryId": 1,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:36:45.8877453Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Margherita Pizza",
-        "Description": "Classic pizza with tomato sauce, mozzarella cheese, and fresh basil",
-        "Price": 12.99,
-        "PictureUrl": "https://www.hearthandfirepizza.com/cdn/shop/products/product-beauty-the-margherita_1500x.png?v=1656423819",
-        "CategoryId": 2,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:36:57.9094634Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Chicken Caesar Salad",
-        "Description": "Fresh salad with grilled chicken, romaine lettuce, croutons, and Caesar dressing",
-        "Price": 8.99,
-        "PictureUrl": "https://s23209.pcdn.co/wp-content/uploads/2023/01/220905_DD_Chx-Caesar-Salad_051.jpg",
-        "CategoryId": 3,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:37:04.8509562Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Sushi Roll",
-        "Description": "Assorted sushi rolls with fresh fish and vegetables",
-        "Price": 14.99,
-        "PictureUrl": "https://www.justonecookbook.com/wp-content/uploads/2020/01/Sushi-Rolls-Maki-Sushi-%E2%80%93-Hosomaki-1106-II.jpg",
-        "CategoryId": 5,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:37:22.4949292Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      }
-    ]
+    "Meals": []
+  },
+  {
+    "TelegramId": 1634251726,
+    "Meals": []
   }
 ]
