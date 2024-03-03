@@ -1,6 +1,8 @@
 ﻿using KFC_CRM.Constants;
+using KFC_CRM.Entities.Box;
 using KFC_CRM.Entities.Customer;
 using KFC_CRM.Entities.Meal;
+using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -23,11 +25,26 @@ public class TelegramService
         botClient.StartReceiving(Update, Error);
         Console.ReadLine();
     }
+
     public async Task Update(ITelegramBotClient client, Update update, CancellationToken token)
     {
         var message = update.Message;
 
-        
+        if (update.CallbackQuery != null)
+        {
+            await client.AnswerCallbackQueryAsync(update?.CallbackQuery?.Id, "Korzinkaga qushilmoqda");
+            var boxes = GetBoxes() ?? new List<Box>();
+            var meal = GetMeal(update.CallbackQuery.Data);
+            var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id) ?? new Box() 
+            {
+                TelegramId = update.CallbackQuery.From.Id,
+                Meals = new List<Meal>()
+            };
+            box.Meals.Add(meal);
+            boxes.Add(box);
+            await SaveBoxesAsync(boxes);
+            await client.SendTextMessageAsync(update.CallbackQuery.From.Id, "Korzinka qo'shildi");
+        }
 
         await Console.Out.WriteLineAsync($"{message?.From?.FirstName}  |  {message?.Text}");
 
@@ -38,7 +55,7 @@ public class TelegramService
             {
                 ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
                 {
-                    new KeyboardButton[] { "Orders", "Meals", "Categories" },
+                    new KeyboardButton[] { "Orders", "Meals", "My Box" },
                 })
                 {
                     ResizeKeyboard = true
@@ -143,9 +160,11 @@ public class TelegramService
                     replyMarkup: replyKeyboardMarkup
                 );
             }
-            else if (message.Text == "Categories")
+            else if (message.Text == "My Box")
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Entered Categories");
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Entered My Box");
+                var boxes = GetBoxes();
+
             }
             if (GetMeals().Any(m => m.Name == message.Text))
             {
@@ -167,10 +186,33 @@ public class TelegramService
                             );
                         }
                     }
+
+                    var inlineKeyboardMarkup = new InlineKeyboardMarkup(new[]
+                    {
+                        new []
+                        {
+                            InlineKeyboardButton.WithCallbackData($"{meal.Name}")
+                        }
+                    });
+
+                    await botClient.SendTextMessageAsync(
+                        chatId: message.Chat.Id,
+                        text: $"Meal: {meal.Name}\nDescription: {meal.Description}\nPrice: {meal.Price}",
+                        replyMarkup:  inlineKeyboardMarkup
+                    );
+
                 }
-                await botClient.SendTextMessageAsync(message.Chat.Id, $"Meal : {meal.Name}\nDescription : {meal.Description}\nPrice : {meal.Price}");
             }
         }
+    }
+
+    private async Task SaveBoxesAsync(List<Box> boxes)
+    {
+        string boxJson = JsonConvert.SerializeObject(boxes, Formatting.Indented);
+
+        // Write the user JSON to the users.json file
+        string filePath = CONSTANTS.BOXPATH;
+        await System.IO.File.WriteAllTextAsync(filePath, boxJson);
     }
 
     public List<Customer> GetCustomers()
@@ -183,6 +225,18 @@ public class TelegramService
     {
         string jsonContent = System.IO.File.ReadAllText(CONSTANTS.MEALSPATH);
         return JsonConvert.DeserializeObject<List<Meal>>(jsonContent);
+    }
+
+    public List<Box> GetBoxes()
+    {
+        string jsonContent = System.IO.File.ReadAllText(CONSTANTS.BOXPATH);
+        return JsonConvert.DeserializeObject<List<Box>>(jsonContent);
+    }
+
+    public Meal GetMeal(string name)
+    {
+        var meals = GetMeals();
+        return meals.FirstOrDefault(m => m.Name == name);
     }
 
     public async static Task Error(ITelegramBotClient client, Exception exception, CancellationToken token)
