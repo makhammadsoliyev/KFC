@@ -1,0 +1,72 @@
+[
+  {
+    "Name": "Cheeseburger",
+    "Description": "Delicious cheeseburger with beef patty, cheese, lettuce, and tomato",
+    "Price": 9.99,
+    "PictureUrl": "https://example.com/images/cheeseburger.jpg",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Margherita Pizza",
+    "Description": "Classic pizza with tomato sauce, mozzarella cheese, and fresh basil",
+    "Price": 12.99,
+    "PictureUrl": "https://example.com/images/margherita-pizza.jpg",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Chicken Caesar Salad",
+    "Description": "Fresh salad with grilled chicken, romaine lettuce, croutons, and Caesar dressing",
+    "Price": 8.99,
+    "PictureUrl": "https://example.com/images/chicken-caesar-salad.jpg",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Spaghetti Bolognese",
+    "Description": "Classic Italian pasta dish with meat sauce",
+    "Price": 10.99,
+    "PictureUrl": "https://example.com/images/spaghetti-bolognese.jpg",
+    "CategoryId": 4
+  },
+  {
+    "Name": "Sushi Roll",
+    "Description": "Assorted sushi rolls with fresh fish and vegetables",
+    "Price": 14.99,
+    "PictureUrl": "https://example.com/images/sushi-roll.jpg",
+    "CategoryId": 5
+  },
+  {
+    "Name": "BBQ Ribs",
+    "Description": "Tender and juicy BBQ ribs with a tangy sauce",
+    "Price": 16.99,
+    "PictureUrl": "https://example.com/images/bbq-ribs.jpg",
+    "CategoryId": 6
+  },
+  {
+    "Name": "Caesar Wrap",
+    "Description": "Grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing wrapped in a tortilla",
+    "Price": 7.99,
+    "PictureUrl": "https://example.com/images/caesar-wrap.jpg",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Mushroom Risotto",
+    "Description": "Creamy risotto with mushrooms and Parmesan cheese",
+    "Price": 11.99,
+    "PictureUrl": "https://example.com/images/mushroom-risotto.jpg",
+    "CategoryId": 4
+  },
+  {
+    "Name": "Fish and Chips",
+    "Description": "Crispy battered fish served with fries",
+    "Price": 9.99,
+    "PictureUrl": "https://example.com/images/fish-and-chips.jpg",
+    "CategoryId": 7
+  },
+  {
+    "Name": "Chocolate Brownie",
+    "Description": "Rich and fudgy chocolate brownie topped with vanilla ice cream",
+    "Price": 5.99,
+    "PictureUrl": "https://example.com/images/chocolate-brownie.jpg",
+    "CategoryId": 8
+  }
+]

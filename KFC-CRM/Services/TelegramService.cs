@@ -1,9 +1,10 @@
 ﻿using KFC_CRM.Constants;
 using KFC_CRM.Entities.Customer;
-using KFC_CRM.Entities.Telegram.API;
+using KFC_CRM.Entities.Meal;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.InlineQueryResults;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KFC_CRM.Services;
@@ -24,12 +25,14 @@ public class TelegramService
     {
         var message = update.Message;
 
-        await Console.Out.WriteLineAsync($"{message.From?.FirstName}  |  {message.Text}");
+        
 
-        if (GetCustomersAsync().Any(c => c.Id == message.From.Id))
+        await Console.Out.WriteLineAsync($"{message?.From?.FirstName}  |  {message?.Text}");
+
+        if (GetCustomers().Any(c => c.Id == message?.From?.Id))
         {
-            var users = GetCustomersAsync();
-            if (users.FirstOrDefault(c => c.Id == message.From.Id).Phone is not null)
+            var users = GetCustomers();
+            if (users.FirstOrDefault(c => c.Id == message?.From?.Id).Phone is not null)
             {
                 ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
                 {
@@ -66,7 +69,7 @@ public class TelegramService
                     TelegramId = message.Chat.Id
                 };
 
-                users = GetCustomersAsync();
+                users = GetCustomers();
                 var existingUser = users.FirstOrDefault(u => u.Id == user.Id);
 
                 if (existingUser != null)
@@ -101,7 +104,7 @@ public class TelegramService
                 Phone = message.Contact?.PhoneNumber,
                 TelegramId = message.Chat.Id
             };
-            var users = GetCustomersAsync();
+            var users = GetCustomers();
             users.Add( user );
 
             // Serialize the user object to JSON
@@ -121,18 +124,46 @@ public class TelegramService
             else if (message.Text == "Meals")
             {
                 await botClient.SendTextMessageAsync(message.Chat.Id, "Entered Meals");
+
+                var meals = GetMeals();
+                var buttons = new List<KeyboardButton[]>();
+
+                foreach (var meal in meals)
+                {
+                    var button = new KeyboardButton(meal.Name);
+                    buttons.Add(new KeyboardButton[] { button });
+                }
+
+                var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons);
+                await botClient.SendTextMessageAsync(
+                    message.Chat.Id,
+                    "Please select a meal:",
+                    replyMarkup: replyKeyboardMarkup
+                );
             }
             else if (message.Text == "Categories")
             {
                 await botClient.SendTextMessageAsync(message.Chat.Id, "Entered Categories");
             }
+            if (GetMeals().Any(m => m.Name == message.Text))
+            {
+                var meals = GetMeals();
+                var meal = meals.FirstOrDefault(m => m.Name == message.Text);
+                await botClient.SendTextMessageAsync(message.Chat.Id, $"Meal : {meal.Name}\nPrice : {meal.Price}");
+            }
         }
     }
 
-    public List<Customer> GetCustomersAsync()
+    public List<Customer> GetCustomers()
     {
         string jsonContent = System.IO.File.ReadAllText(CONSTANTS.USERSPATH);
         return JsonConvert.DeserializeObject<List<Customer>>(jsonContent);
+    }
+
+    public List<Meal> GetMeals()
+    {
+        string jsonContent = System.IO.File.ReadAllText(CONSTANTS.MEALSPATH);
+        return JsonConvert.DeserializeObject<List<Meal>>(jsonContent);
     }
 
     public async static Task Error(ITelegramBotClient client, Exception exception, CancellationToken token)
