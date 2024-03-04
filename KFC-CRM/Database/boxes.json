@@ -2,46 +2,5 @@
   {
     "TelegramId": 1619704844,
     "Meals": []
-  },
-  {
-    "TelegramId": 483326414,
-    "Meals": []
-  },
-  {
-    "TelegramId": 1721247146,
-    "Meals": [
-      {
-        "Name": "Cheeseburger",
-        "Description": "Delicious cheeseburger with beef patty, cheese, lettuce, and tomato",
-        "Price": 9.99,
-        "PictureUrl": "https://s7d1.scene7.com/is/image/mcdonalds/Header_Cheeseburger_832x472:1-3-product-tile-desktop?wid=763&hei=472&dpr=off",
-        "CategoryId": 1,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:33:38.6822251Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      },
-      {
-        "Name": "Cheeseburger",
-        "Description": "Delicious cheeseburger with beef patty, cheese, lettuce, and tomato",
-        "Price": 9.99,
-        "PictureUrl": "https://s7d1.scene7.com/is/image/mcdonalds/Header_Cheeseburger_832x472:1-3-product-tile-desktop?wid=763&hei=472&dpr=off",
-        "CategoryId": 1,
-        "Id": 0,
-        "CreatedAt": "2024-03-03T15:33:38.6822251Z",
-        "UpdatedAt": "0001-01-01T00:00:00",
-        "DeletedAt": "0001-01-01T00:00:00",
-        "IsDeleted": false
-      }
-    ]
-  },
-  {
-    "TelegramId": 6919797087,
-    "Meals": []
-  },
-  {
-    "TelegramId": 1634251726,
-    "Meals": []
   }
 ]

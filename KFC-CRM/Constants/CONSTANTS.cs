@@ -13,4 +13,5 @@ public class CONSTANTS
     public const string MEALSPATH = "../../../../KFC-CRM/Database/meals.json";
     public const string ORDERPATH = "../../../../KFC-CRM/Database/orders.json";
     public const string BOXPATH = "../../../../KFC-CRM/Database/boxes.json";
+    public const string DB_CONNECTION_STRING = "Host=localhost;Port=5432;Username=postgres;Password=0511;Database=kfc_db";
 }

@@ -1,55 +1,11 @@
 [
   {
-    "FirstName": "Asilbek",
-    "LastName": "Abrorov",
-    "Phone": "998900621310",
-    "TelegramId": 6919797087,
-    "Id": 6919797087,
-    "CreatedAt": "2024-03-02T08:58:44.3792677Z",
-    "UpdatedAt": "0001-01-01T00:00:00",
-    "DeletedAt": "0001-01-01T00:00:00",
-    "IsDeleted": false
-  },
-  {
     "FirstName": "Asrorbek",
     "LastName": "Abrorov",
     "Phone": "998900511603",
     "TelegramId": 1619704844,
     "Id": 1619704844,
-    "CreatedAt": "2024-03-02T18:31:04.741171Z",
-    "UpdatedAt": "0001-01-01T00:00:00",
-    "DeletedAt": "0001-01-01T00:00:00",
-    "IsDeleted": false
-  },
-  {
-    "FirstName": "Abrorov",
-    "LastName": "Javohir",
-    "Phone": "998900620910",
-    "TelegramId": 1721247146,
-    "Id": 1721247146,
-    "CreatedAt": "2024-03-02T18:34:28.0641269Z",
-    "UpdatedAt": "0001-01-01T00:00:00",
-    "DeletedAt": "0001-01-01T00:00:00",
-    "IsDeleted": false
-  },
-  {
-    "FirstName": "J",
-    "LastName": "O",
-    "Phone": "998909090511",
-    "TelegramId": 483326414,
-    "Id": 483326414,
-    "CreatedAt": "2024-03-03T15:24:21.0849624Z",
-    "UpdatedAt": "0001-01-01T00:00:00",
-    "DeletedAt": "0001-01-01T00:00:00",
-    "IsDeleted": false
-  },
-  {
-    "FirstName": "Umidjon",
-    "LastName": null,
-    "Phone": "998900223538",
-    "TelegramId": 1634251726,
-    "Id": 1634251726,
-    "CreatedAt": "2024-03-03T15:59:54.8709181Z",
+    "CreatedAt": "2024-03-04T08:55:41.8473398Z",
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
