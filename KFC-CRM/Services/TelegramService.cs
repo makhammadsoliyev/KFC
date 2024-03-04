@@ -5,6 +5,7 @@ using KFC_CRM.Entities.Meal;
 using KFC_CRM.Entities.Order;
 using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
+using Npgsql;
 using System;
 using System.Net;
 using Telegram.Bot;
@@ -66,13 +67,12 @@ public class TelegramService
                 // Save the order to the orders.json file
                 var orders = LoadOrders();
                 orders.Add(order);
-                SaveOrders(orders);
-
                 await botClient.SendTextMessageAsync(update.CallbackQuery.From.Id, "Your order has been placed successfully!");
 
                 // Reset the box for the customer
                 box.Meals.Clear();
                 await SaveBoxesAsync(boxes);
+                SaveOrders(orders, order);
             }
             else if (update.CallbackQuery.Data.Contains("__delete"))
             {
@@ -183,13 +183,7 @@ public class TelegramService
                 if (existingUser != null)
                 {
                     existingUser.Phone = user.Phone;
-
-                    // Serialize the user object to JSON
-                    string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
-
-                    // Write the user JSON to the users.json file
-                    string filePath = CONSTANTS.USERSPATH;
-                    await System.IO.File.WriteAllTextAsync(filePath, userJson);
+                    await SaveUsersAsync(users);
                 }
             }
         }
@@ -216,15 +210,11 @@ public class TelegramService
                 Phone = message.Contact?.PhoneNumber,
                 TelegramId = message.Chat.Id
             };
+
             var users = GetCustomers();
             users.Add( user );
-
-            // Serialize the user object to JSON
-            string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
-
-            // Write the user JSON to the users.json file
-            string filePath = CONSTANTS.USERSPATH;
-            await System.IO.File.WriteAllTextAsync(filePath, userJson);
+            
+            await SaveUsersAsync( users );
         }
 
         if (message != null)
@@ -247,8 +237,6 @@ public class TelegramService
             }
             else if (message.Text == "Meals")
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Entered Meals");
-
                 var meals = GetMeals();
                 var buttons = new List<KeyboardButton[]>();
 
@@ -268,8 +256,6 @@ public class TelegramService
 
             else if (message.Text == "My Box")
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Entered My Box");
-
                 var boxes = GetBoxes();
                 if (boxes.DefaultIfEmpty() != null)
                 {
@@ -391,7 +377,7 @@ public class TelegramService
         // You can implement your own logic to generate a unique order number
         // For simplicity, let's generate a random number between 1000 and 9999
         Random random = new Random();
-        return random.Next(1000, 10000);
+        return random.Next(100, 10000);
     }
 
     // Load existing orders from the orders.json file
@@ -419,13 +405,36 @@ public class TelegramService
     }
 
     // Save the orders to the orders.json file
-    private void SaveOrders(List<Order> orders)
+    private void SaveOrders(List<Order> orders, Order order)
     {
         // Serialize the list of Order objects to a JSON string
         string ordersJson = JsonConvert.SerializeObject(orders, Formatting.Indented);
 
         // Write the JSON string to the orders.json file
         System.IO.File.WriteAllText(CONSTANTS.ORDERPATH, ordersJson);
+
+        using (var connection = new NpgsqlConnection(CONSTANTS.DB_CONNECTION_STRING))
+        {
+            connection.Open();
+
+            // Create a command to insert order into the database
+            
+            string insertQuery = "INSERT INTO orders (customer_id, number, total_amount, date) " +
+                                    "VALUES (@CustomerId, @Number, @TotalAmount, @Date)";
+
+            using (var command = new NpgsqlCommand(insertQuery, connection))
+            {
+                // Set the parameter values
+                command.Parameters.AddWithValue("@CustomerId", order.CustomerId);
+                command.Parameters.AddWithValue("@Number", order.Number);
+                command.Parameters.AddWithValue("@TotalAmount", order.TotalAmount);
+                command.Parameters.AddWithValue("@Date", order.Date);
+
+                // Execute the insert command
+                command.ExecuteNonQuery();
+            }
+            
+        }
     }
 
     private async Task SaveBoxesAsync(List<Box> boxes)
@@ -459,6 +468,15 @@ public class TelegramService
     {
         var meals = GetMeals();
         return meals.FirstOrDefault(m => m.Name == name);
+    }
+
+    private async Task SaveUsersAsync(List<Customer> users)
+    {
+        string userJson = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+        // Write the user JSON to the users.json file
+        string filePath = CONSTANTS.USERSPATH;
+        await System.IO.File.WriteAllTextAsync(filePath, userJson);
     }
 
     public async static Task Error(ITelegramBotClient client, Exception exception, CancellationToken token)
