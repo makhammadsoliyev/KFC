@@ -9,5 +9,16 @@
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
+  },
+  {
+    "FirstName": "Javohir",
+    "LastName": null,
+    "Phone": "+998979898188",
+    "TelegramId": 1653251416,
+    "Id": 1653251416,
+    "CreatedAt": "2024-03-04T14:41:10.7475033Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
   }
 ]

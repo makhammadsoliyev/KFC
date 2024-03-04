@@ -3,15 +3,12 @@ using KFC_CRM.Entities.Box;
 using KFC_CRM.Entities.Customer;
 using KFC_CRM.Entities.Meal;
 using KFC_CRM.Entities.Order;
-using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
 using Npgsql;
 using Spectre.Console;
-using System;
 using System.Net;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.InlineQueryResults;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace KFC_CRM.Services;
@@ -418,7 +415,7 @@ public class TelegramService
             connection.Open();
 
             // Create a command to insert order into the database
-            
+
             string insertQuery = "INSERT INTO orders (customer_id, number, total_amount, date) " +
                                     "VALUES (@CustomerId, @Number, @TotalAmount, @Date)";
 
@@ -433,7 +430,7 @@ public class TelegramService
                 // Execute the insert command
                 command.ExecuteNonQuery();
             }
-            
+
         }
     }
 
