@@ -20,5 +20,16 @@
     "UpdatedAt": "0001-01-01T00:00:00",
     "DeletedAt": "0001-01-01T00:00:00",
     "IsDeleted": false
+  },
+  {
+    "CustomerId": 1619704844,
+    "Number": 882,
+    "TotalAmount": 9.99,
+    "Date": "2024-03-04T12:21:36.5980664Z",
+    "Id": 0,
+    "CreatedAt": "2024-03-04T12:21:36.5980667Z",
+    "UpdatedAt": "0001-01-01T00:00:00",
+    "DeletedAt": "0001-01-01T00:00:00",
+    "IsDeleted": false
   }
 ]
