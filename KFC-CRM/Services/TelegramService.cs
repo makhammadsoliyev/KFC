@@ -6,6 +6,7 @@ using KFC_CRM.Entities.Order;
 using KFC_CRM.Entities.Telegram.API;
 using Newtonsoft.Json;
 using Npgsql;
+using Spectre.Console;
 using System;
 using System.Net;
 using Telegram.Bot;
@@ -32,7 +33,7 @@ public class TelegramService
     {
         var message = update.Message;
 
-        await Console.Out.WriteLineAsync($"{message?.From?.FirstName}  |  {message?.Text}");
+        AnsiConsole.MarkupLine($"[yellow]{message?.From?.FirstName}[/]  |  {message?.Text}");
 
         if (update.CallbackQuery != null)
         {
@@ -41,9 +42,9 @@ public class TelegramService
             if (update.CallbackQuery.Data == "Order")
             {
                 decimal totalPrice = 0;
-                
+
                 var meal = GetMeal(update.CallbackQuery.Data);
-                
+
                 var box = boxes.FirstOrDefault(b => b.TelegramId == update.CallbackQuery.From.Id);
 
                 var distinctMeals = box.Meals.DistinctBy(m => m.Name);
@@ -212,9 +213,9 @@ public class TelegramService
             };
 
             var users = GetCustomers();
-            users.Add( user );
-            
-            await SaveUsersAsync( users );
+            users.Add(user);
+
+            await SaveUsersAsync(users);
         }
 
         if (message != null)
@@ -315,7 +316,7 @@ public class TelegramService
                             );
                     }
                 }
-                
+
             }
 
             if (GetMeals().Any(m => m.Name == message.Text))
@@ -350,13 +351,14 @@ public class TelegramService
                     await botClient.SendTextMessageAsync(
                         chatId: message.Chat.Id,
                         text: $"Meal: {meal.Name}\nDescription: {meal.Description}\nPrice: {meal.Price}",
-                        replyMarkup:  inlineKeyboardMarkup
+                        replyMarkup: inlineKeyboardMarkup
                     );
 
                 }
             }
         }
     }
+
     // Format the orders into a readable text format
     private string FormatOrdersText(List<Order> orders)
     {
@@ -374,8 +376,6 @@ public class TelegramService
     // Generate a unique order number
     private int GenerateOrderNumber()
     {
-        // You can implement your own logic to generate a unique order number
-        // For simplicity, let's generate a random number between 1000 and 9999
         Random random = new Random();
         return random.Next(100, 10000);
     }
